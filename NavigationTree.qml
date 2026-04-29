@@ -30,6 +30,14 @@ QtObject {
         }
     }
 
+    // registerRepeat("item", "menu1", "Item", {from:1, to:5})
+    // → item_1〜item_5 を parentName の子として登録
+    function registerRepeat(idPrefix, parentName, labelPrefix, range) {
+        for (var i = range.from; i <= range.to; i++) {
+            registerNode(idPrefix + "_" + i, parentName, labelPrefix + " " + i)
+        }
+    }
+
     function goBack() {
         var node = _nodes[currentNode]
         if (node && node.parent) {
