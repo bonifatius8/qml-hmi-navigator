@@ -7,6 +7,9 @@ Window {
     visible: true
     title: "qml-hmi-navigator"
 
+    FontLoader { source: "qrc:/qt/qml/HmiNavigator/qml/fonts/migmix-2p-regular.ttf" }
+    FontLoader { source: "qrc:/qt/qml/HmiNavigator/qml/fonts/migmix-2p-bold.ttf" }
+
     Component.onCompleted: {
         var menu = "qrc:/qt/qml/HmiNavigator/qml/screens/MenuScreen.qml"
         var leaf = "qrc:/qt/qml/HmiNavigator/qml/screens/LeafScreenA.qml"

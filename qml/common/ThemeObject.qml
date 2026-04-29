@@ -17,7 +17,7 @@ QtObject {
     readonly property color offColor:      "#aaaaaa"
 
     // Typography
-    readonly property string fontFamily: "sans-serif"
+    readonly property string fontFamily: "MigMix 2P"
     readonly property int fontSizeSmall:  16
     readonly property int fontSizeBase:   20
     readonly property int fontSizeLarge:  28

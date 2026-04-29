@@ -30,6 +30,8 @@ qt_add_qml_module(qml-hmi-navigator
         qml/screens/LeafScreenA.qml
     RESOURCES
         qmldir
+        qml/fonts/migmix-2p-regular.ttf
+        qml/fonts/migmix-2p-bold.ttf
 )
 
 target_link_libraries(qml-hmi-navigator PRIVATE Qt6::Quick)
