@@ -15,8 +15,13 @@ qt_add_executable(qml-hmi-navigator
 qt_add_qml_module(qml-hmi-navigator
     URI HmiNavigator
     VERSION 1.0
+    NO_GENERATE_QMLDIR
     QML_FILES
-        qml/Main.qml
+        Main.qml
+        NavigationTree.qml
+        ScreenRegistry.qml
+    RESOURCES
+        qmldir
 )
 
 target_link_libraries(qml-hmi-navigator PRIVATE Qt6::Quick)

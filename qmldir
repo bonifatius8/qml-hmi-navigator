@@ -1,0 +1,4 @@
+module HmiNavigator
+singleton NavigationTree 1.0 NavigationTree.qml
+singleton ScreenRegistry 1.0 ScreenRegistry.qml
+Main 1.0 Main.qml
