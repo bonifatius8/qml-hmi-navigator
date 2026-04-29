@@ -8,8 +8,8 @@ Window {
     title: "qml-hmi-navigator"
 
     Component.onCompleted: {
-        var menu = "qrc:/qt/qml/HmiNavigator/screens/MenuScreen.qml"
-        var leaf = "qrc:/qt/qml/HmiNavigator/screens/LeafScreenA.qml"
+        var menu = "qrc:/qt/qml/HmiNavigator/qml/screens/MenuScreen.qml"
+        var leaf = "qrc:/qt/qml/HmiNavigator/qml/screens/LeafScreenA.qml"
 
         // ── ノード定義 ──────────────────────────────
         NavigationTree.registerNode("root",           "",               "ホーム")

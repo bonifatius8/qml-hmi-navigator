@@ -1,10 +1,10 @@
 module HmiNavigator
-singleton NavigationTree 1.0 NavigationTree.qml
-singleton ScreenRegistry 1.0 ScreenRegistry.qml
-singleton ThemeObject 1.0 ThemeObject.qml
-Main 1.0 Main.qml
-NavigatorShell 1.0 NavigatorShell.qml
-NavButton 1.0 NavButton.qml
-NavHeader 1.0 NavHeader.qml
-OnOffButton 1.0 OnOffButton.qml
-HmiIcon 1.0 HmiIcon.qml
+singleton NavigationTree 1.0 qml/navigator/NavigationTree.qml
+singleton ScreenRegistry 1.0 qml/navigator/ScreenRegistry.qml
+singleton ThemeObject 1.0 qml/common/ThemeObject.qml
+Main 1.0 qml/Main.qml
+NavigatorShell 1.0 qml/navigator/NavigatorShell.qml
+NavButton 1.0 qml/common/NavButton.qml
+NavHeader 1.0 qml/navigator/NavHeader.qml
+OnOffButton 1.0 qml/common/OnOffButton.qml
+HmiIcon 1.0 qml/common/HmiIcon.qml

@@ -17,17 +17,17 @@ qt_add_qml_module(qml-hmi-navigator
     VERSION 1.0
     NO_GENERATE_QMLDIR
     QML_FILES
-        Main.qml
-        NavigationTree.qml
-        ScreenRegistry.qml
-        ThemeObject.qml
-        NavigatorShell.qml
-        NavButton.qml
-        NavHeader.qml
-        OnOffButton.qml
-        HmiIcon.qml
-        screens/MenuScreen.qml
-        screens/LeafScreenA.qml
+        qml/Main.qml
+        qml/navigator/NavigationTree.qml
+        qml/navigator/ScreenRegistry.qml
+        qml/navigator/NavigatorShell.qml
+        qml/navigator/NavHeader.qml
+        qml/common/ThemeObject.qml
+        qml/common/NavButton.qml
+        qml/common/OnOffButton.qml
+        qml/common/HmiIcon.qml
+        qml/screens/MenuScreen.qml
+        qml/screens/LeafScreenA.qml
     RESOURCES
         qmldir
 )
