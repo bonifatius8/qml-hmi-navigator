@@ -132,9 +132,9 @@ Canvas {
         ctx.lineCap    = "round"
         ctx.lineJoin   = "round"
         ctx.beginPath()
-        ctx.moveTo(cx + dir * s * 0.5, cy - s)
-        ctx.lineTo(cx - dir * s * 0.5, cy)
-        ctx.lineTo(cx + dir * s * 0.5, cy + s)
+        ctx.moveTo(cx - dir * s * 0.5, cy - s)
+        ctx.lineTo(cx + dir * s * 0.5, cy)
+        ctx.lineTo(cx - dir * s * 0.5, cy + s)
         ctx.stroke()
     }
 }
