@@ -6,14 +6,15 @@ Item {
         anchors.centerIn: parent
         width: 320
         height: 160
-        color: "#313244"
-        radius: 8
+        color: ThemeObject.surface
+        radius: ThemeObject.radius
 
         Text {
             anchors.centerIn: parent
-            text: "Screen A\n" + NavigationTree.currentNode
-            color: "#cdd6f4"
-            font.pixelSize: 20
+            text: NavigationTree.breadcrumbs.map(b => b.label).join(" › ")
+            color: ThemeObject.textPrimary
+            font.pixelSize: ThemeObject.fontSizeLarge
+            font.family: ThemeObject.fontFamily
             horizontalAlignment: Text.AlignHCenter
         }
     }

@@ -1,5 +1,8 @@
 module HmiNavigator
 singleton NavigationTree 1.0 NavigationTree.qml
 singleton ScreenRegistry 1.0 ScreenRegistry.qml
+singleton ThemeObject 1.0 ThemeObject.qml
 Main 1.0 Main.qml
 NavigatorShell 1.0 NavigatorShell.qml
+NavButton 1.0 NavButton.qml
+NavHeader 1.0 NavHeader.qml

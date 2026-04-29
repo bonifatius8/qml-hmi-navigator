@@ -20,7 +20,10 @@ qt_add_qml_module(qml-hmi-navigator
         Main.qml
         NavigationTree.qml
         ScreenRegistry.qml
+        ThemeObject.qml
         NavigatorShell.qml
+        NavButton.qml
+        NavHeader.qml
         screens/MenuScreen.qml
         screens/LeafScreenA.qml
     RESOURCES
