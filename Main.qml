@@ -3,7 +3,7 @@ import HmiNavigator
 
 Window {
     width: 800
-    height: 600
+    height: 480
     visible: true
     title: "qml-hmi-navigator"
 

@@ -6,3 +6,4 @@ Main 1.0 Main.qml
 NavigatorShell 1.0 NavigatorShell.qml
 NavButton 1.0 NavButton.qml
 NavHeader 1.0 NavHeader.qml
+OnOffButton 1.0 OnOffButton.qml

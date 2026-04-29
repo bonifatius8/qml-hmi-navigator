@@ -4,21 +4,31 @@ import HmiNavigator
 Rectangle {
     width: parent.width
     height: ThemeObject.headerHeight
-    color: ThemeObject.background
+    color: ThemeObject.headerBg
 
     Row {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.leftMargin: ThemeObject.spacing
-        spacing: 8
+        anchors.leftMargin: 12
+        spacing: 16
 
         // Back button
-        NavButton {
-            text: "←"
-            width: 40
-            height: 36
+        Rectangle {
+            width: 50
+            height: 50
+            radius: 6
+            color: backHover.containsMouse ? "#1a6fa8" : "#195A8C"
             visible: NavigationTree.breadcrumbs.length > 1
-            onClicked: NavigationTree.goBack()
+
+            Text {
+                anchors.centerIn: parent
+                text: "◀"
+                color: "white"
+                font.pixelSize: 22
+            }
+
+            HoverHandler { id: backHover }
+            TapHandler { onTapped: NavigationTree.goBack() }
         }
 
         // Breadcrumbs
@@ -30,7 +40,7 @@ Rectangle {
 
                 Text {
                     text: index > 0 ? "›" : ""
-                    color: ThemeObject.textSecondary
+                    color: "#a8d4ff"
                     font.pixelSize: ThemeObject.fontSizeBase
                     anchors.verticalCenter: parent.verticalCenter
                 }
@@ -38,13 +48,10 @@ Rectangle {
                 Text {
                     text: modelData.label
                     color: index === NavigationTree.breadcrumbs.length - 1
-                           ? ThemeObject.textPrimary
-                           : ThemeObject.primary
-                    font.pixelSize: ThemeObject.fontSizeBase
+                           ? "white" : "#a8d4ff"
+                    font.pixelSize: ThemeObject.fontSizeTitle
                     font.family: ThemeObject.fontFamily
                     anchors.verticalCenter: parent.verticalCenter
-
-                    HoverHandler { id: crumbHover }
 
                     TapHandler {
                         enabled: index < NavigationTree.breadcrumbs.length - 1
