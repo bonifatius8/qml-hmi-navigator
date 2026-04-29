@@ -3,9 +3,10 @@ import HmiNavigator
 
 Item {
     id: root
+    anchors.fill: parent
 
     property int page: 0
-    readonly property int itemsPerPage: 6
+    readonly property int itemsPerPage: 5
     readonly property int totalItems: 12
     readonly property int totalPages: Math.ceil(totalItems / itemsPerPage)
 
@@ -21,9 +22,11 @@ Item {
     }
 
     Column {
-        x: 40
-        y: 20
-        spacing: ThemeObject.spacing
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.left: parent.left
+        anchors.leftMargin: 40
+        spacing: 8
 
         Repeater {
             model: Math.min(itemsPerPage, totalItems - root.page * itemsPerPage)

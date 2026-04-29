@@ -3,7 +3,7 @@ import QtQuick
 
 QtObject {
     // Colors — CH blue scheme
-    readonly property color background:    "#ffffff"
+    readonly property color background:    "#EBEBEB"
     readonly property color surface:       "#f0f4f8"
     readonly property color btnGradTop:    "#195A8C"
     readonly property color btnGradBot:    "#004682"
@@ -26,7 +26,7 @@ QtObject {
     // Layout
     readonly property int headerHeight:   70
     readonly property int buttonHeight:   60
-    readonly property int buttonWidth:    300
-    readonly property int spacing:        20
-    readonly property int radius:         10
+    readonly property int buttonWidth:    500
+    readonly property int spacing:        14
+    readonly property int radius:         16
 }

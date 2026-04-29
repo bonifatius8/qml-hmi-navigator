@@ -25,6 +25,7 @@ qt_add_qml_module(qml-hmi-navigator
         NavButton.qml
         NavHeader.qml
         OnOffButton.qml
+        HmiIcon.qml
         screens/MenuScreen.qml
         screens/LeafScreenA.qml
     RESOURCES

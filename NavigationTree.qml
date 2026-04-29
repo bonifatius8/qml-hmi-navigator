@@ -6,8 +6,10 @@ QtObject {
 
     property string currentNode: ""
 
-    readonly property var breadcrumbs: _buildBreadcrumbs(currentNode)
-    readonly property var menuModel: _buildMenuModel(currentNode)
+    readonly property var breadcrumbs:   _buildBreadcrumbs(currentNode)
+    readonly property var menuModel:     _buildMenuModel(currentNode)
+    readonly property var siblings:      _buildSiblings(currentNode)
+    readonly property int siblingIndex:  _buildSiblingIndex(currentNode)
 
     property var _nodes: ({})
 
@@ -43,6 +45,30 @@ QtObject {
         if (node && node.parent) {
             currentNode = node.parent
         }
+    }
+
+    function navigateSibling(offset) {
+        var idx = siblingIndex + offset
+        if (idx >= 0 && idx < siblings.length) {
+            navigate(siblings[idx].name)
+        }
+    }
+
+    function _buildSiblings(name) {
+        if (!name || !_nodes[name]) return []
+        var parentName = _nodes[name].parent
+        if (!parentName || !_nodes[parentName]) return []
+        return _nodes[parentName].children.map(function(c) {
+            return { name: c, label: _nodes[c] ? _nodes[c].label : c }
+        })
+    }
+
+    function _buildSiblingIndex(name) {
+        var sibs = _buildSiblings(name)
+        for (var i = 0; i < sibs.length; i++) {
+            if (sibs[i].name === name) return i
+        }
+        return 0
     }
 
     function _buildBreadcrumbs(name) {
