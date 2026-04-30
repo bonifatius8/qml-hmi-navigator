@@ -28,6 +28,7 @@ qt_add_qml_module(qml-hmi-navigator
         qml/common/HmiIcon.qml
         qml/screens/MenuScreen.qml
         qml/screens/LeafScreenA.qml
+        qml/screens/StatusLeafScreen.qml
     RESOURCES
         qmldir
         qml/fonts/migmix-2p-regular.ttf

@@ -11,8 +11,9 @@ Window {
     FontLoader { source: "qrc:/qt/qml/HmiNavigator/qml/fonts/migmix-2p-bold.ttf" }
 
     Component.onCompleted: {
-        var menu = "qrc:/qt/qml/HmiNavigator/qml/screens/MenuScreen.qml"
-        var leaf = "qrc:/qt/qml/HmiNavigator/qml/screens/LeafScreenA.qml"
+        var menu       = "qrc:/qt/qml/HmiNavigator/qml/screens/MenuScreen.qml"
+        var leaf       = "qrc:/qt/qml/HmiNavigator/qml/screens/LeafScreenA.qml"
+        var statusLeaf = "qrc:/qt/qml/HmiNavigator/qml/screens/StatusLeafScreen.qml"
 
         // ── ノード定義 ──────────────────────────────
         NavigationTree.registerNode("root",           "",               "ホーム")
@@ -42,16 +43,16 @@ Window {
         ScreenRegistry.register("test",           menu)
         ScreenRegistry.register("setting",        menu)
 
-        ScreenRegistry.register("status_general", leaf)
-        ScreenRegistry.register("status_service", leaf)
+        ScreenRegistry.register("status_general", statusLeaf)
+        ScreenRegistry.register("status_service", statusLeaf)
         ScreenRegistry.register("test_general",   leaf)
         ScreenRegistry.register("test_device",    leaf)
         ScreenRegistry.register("test_func",      leaf)
         ScreenRegistry.register("setting_device", leaf)
         ScreenRegistry.register("setting_model",  leaf)
 
-        for (var i = 1; i <= 4; i++) ScreenRegistry.register("status_ope_" + i, leaf)
-        for (var j = 1; j <= 2; j++) ScreenRegistry.register("status_ver_" + j, leaf)
+        for (var i = 1; i <= 4; i++) ScreenRegistry.register("status_ope_" + i, statusLeaf)
+        for (var j = 1; j <= 2; j++) ScreenRegistry.register("status_ver_" + j, statusLeaf)
         for (var k = 1; k <= 4; k++) ScreenRegistry.register("setting_unit_" + k, leaf)
 
         NavigationTree.navigate("root")
