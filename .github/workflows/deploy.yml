@@ -53,9 +53,6 @@ jobs:
           find build -maxdepth 1 -type f \( -name "*.html" -o -name "*.js" -o -name "*.wasm" -o -name "*.svg" \) \
             -exec cp {} dist/ \;
           mv dist/qml-hmi-navigator.html dist/index.html
-          curl -fsSL https://cdn.jsdelivr.net/npm/coi-serviceworker@0.1.7/coi-serviceworker.min.js \
-            -o dist/coi-serviceworker.js
-          sed -i 's|</head>|<script src="coi-serviceworker.js"></script></head>|' dist/index.html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

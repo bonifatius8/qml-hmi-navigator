@@ -37,7 +37,18 @@ qt_add_qml_module(qml-hmi-navigator
 
 target_link_libraries(qml-hmi-navigator PRIVATE Qt6::Quick)
 
-if(NOT EMSCRIPTEN)
+if(EMSCRIPTEN)
+    add_custom_command(TARGET qml-hmi-navigator POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+            -DHTML_FILE="${CMAKE_CURRENT_BINARY_DIR}/qml-hmi-navigator.html"
+            -DAPP_NAME="qml-hmi-navigator"
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/patch-wasm-html.cmake"
+        COMMAND ${CMAKE_COMMAND} -E copy
+            "${CMAKE_CURRENT_SOURCE_DIR}/coi-serviceworker.js"
+            "${CMAKE_CURRENT_BINARY_DIR}/coi-serviceworker.js"
+        COMMENT "Patching Wasm HTML and copying coi-serviceworker.js"
+    )
+else()
     set_target_properties(qml-hmi-navigator PROPERTIES
         WIN32_EXECUTABLE TRUE
     )

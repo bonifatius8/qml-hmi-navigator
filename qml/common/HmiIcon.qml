@@ -122,28 +122,41 @@ Canvas {
     }
 
     function _drawSetting(ctx) {
+        // SVG ref: 512x512 viewBox, 12 teeth, outer≈0.97R, body≈0.75R, hole≈0.33R
         var cx = width  / 2
         var cy = height / 2
-        var maxR   = Math.min(width, height) / 2 - 1
-        var toothR = maxR
-        var outerR = maxR * 0.76
-        var innerR = maxR * 0.44
-        var teeth  = 8
-        var step   = Math.PI * 2 / teeth
-        var half   = step * 0.22
+        var R      = Math.min(width, height) / 2 * 0.96
+        var tipR   = R              // tooth tip radius
+        var bodyR  = R * 0.755     // tooth root / gear body
+        var holeR  = R * 0.325     // center hole
+        var teeth     = 8
+        var step      = Math.PI * 2 / teeth
+        var tHalfBase = step * 0.28  // 歯基部の半角 (広い)
+        var tHalfTip  = step * 0.18  // 歯先端の半角 (狭い) → 台形
 
         ctx.beginPath()
+        var aStart = -Math.PI / 2 - step + tHalfBase
+        ctx.moveTo(cx + bodyR * Math.cos(aStart), cy + bodyR * Math.sin(aStart))
         for (var i = 0; i < teeth; i++) {
             var a = i * step - Math.PI / 2
-            ctx.lineTo(cx + Math.cos(a - half) * outerR, cy + Math.sin(a - half) * outerR)
-            ctx.lineTo(cx + Math.cos(a - half) * toothR, cy + Math.sin(a - half) * toothR)
-            ctx.lineTo(cx + Math.cos(a + half) * toothR, cy + Math.sin(a + half) * toothR)
-            ctx.lineTo(cx + Math.cos(a + half) * outerR, cy + Math.sin(a + half) * outerR)
+            var aValS      = a - step + tHalfBase   // 前の歯 trailing edge から開始
+            var aLeadBase  = a - tHalfBase
+            var aLeadTip   = a - tHalfTip
+            var aTrailTip  = a + tHalfTip
+            var aTrailBase = a + tHalfBase
+            // 谷弧 (bodyR, continuous)
+            ctx.arc(cx, cy, bodyR, aValS, aLeadBase, false)
+            // 前フランク (斜め: bodyR基部 → tipR先端)
+            ctx.lineTo(cx + tipR * Math.cos(aLeadTip), cy + tipR * Math.sin(aLeadTip))
+            // 歯先弧 (tipR)
+            ctx.arc(cx, cy, tipR, aLeadTip, aTrailTip, false)
+            // 後フランク (斜め: tipR先端 → bodyR基部)
+            ctx.lineTo(cx + bodyR * Math.cos(aTrailBase), cy + bodyR * Math.sin(aTrailBase))
         }
         ctx.closePath()
-        // inner hole (evenodd)
-        ctx.moveTo(cx + innerR, cy)
-        ctx.arc(cx, cy, innerR, 0, Math.PI * 2, true)
+        // Center hole (evenodd)
+        ctx.moveTo(cx + holeR, cy)
+        ctx.arc(cx, cy, holeR, 0, Math.PI * 2, true)
         ctx.fill("evenodd")
     }
 
