@@ -26,7 +26,7 @@ QtObject {
     // Layout
     readonly property int headerHeight:   70
     readonly property int buttonHeight:   60
-    readonly property int buttonWidth:    500
-    readonly property int spacing:        14
-    readonly property int radius:         16
+    readonly property int buttonWidth:    300
+    readonly property int spacing:        15
+    readonly property int radius:         10
 }

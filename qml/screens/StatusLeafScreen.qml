@@ -5,7 +5,8 @@ Item {
     id: root
     anchors.fill: parent
 
-    readonly property int totalItems: 10
+    readonly property int itemH: 60 + 8
+    readonly property int totalItems: Math.min(Math.floor(parent.height / itemH), dummyData.length)
 
     readonly property var dummyData: [
         { label: "現在値 01", value: "85.3",  unit: "°C"    },
@@ -15,20 +16,14 @@ Item {
         { label: "現在値 05", value: "2.4",   unit: "A"     },
         { label: "現在値 06", value: "320",   unit: "rpm"   },
         { label: "現在値 07", value: "0.98",  unit: "MPa"   },
-        { label: "現在値 08", value: "43.1",  unit: "°C"    },
-        { label: "現在値 09", value: "99.7",  unit: "%"     },
-        { label: "現在値 10", value: "18.2",  unit: "kW"    }
+        { label: "現在値 08", value: "43.1",  unit: "°C"    }
     ]
 
     Rectangle { anchors.fill: parent; color: ThemeObject.background }
 
     Column {
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 40
-        anchors.right: parent.right
-        anchors.rightMargin: 40
+        anchors.centerIn: parent
+        width: 720
         spacing: 8
 
         Repeater {

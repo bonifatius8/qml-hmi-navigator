@@ -10,6 +10,7 @@ QtObject {
     readonly property var menuModel:     _buildMenuModel(currentNode)
     readonly property var siblings:      _buildSiblings(currentNode)
     readonly property int siblingIndex:  _buildSiblingIndex(currentNode)
+    readonly property bool isLeaf:       menuModel.length === 0
 
     property var _nodes: ({})
 

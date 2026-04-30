@@ -5,7 +5,8 @@ Item {
     id: root
     anchors.fill: parent
 
-    readonly property int totalItems: 12
+    readonly property int itemH: ThemeObject.buttonHeight + 8
+    readonly property int totalItems: Math.floor(parent.height / itemH)
 
     property var states: {
         var s = {}
@@ -19,10 +20,7 @@ Item {
     }
 
     Column {
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 40
+        anchors.centerIn: parent
         spacing: 8
 
         Repeater {

@@ -27,7 +27,7 @@ Item {
         anchors.verticalCenter: contentLoader.verticalCenter
         width: 36
         height: 200
-        visible: NavigationTree.siblingIndex > 0
+        visible: NavigationTree.isLeaf && NavigationTree.siblingIndex > 0
         z: 10
 
         HmiIcon {
@@ -45,7 +45,7 @@ Item {
         anchors.verticalCenter: contentLoader.verticalCenter
         width: 36
         height: 200
-        visible: NavigationTree.siblingIndex < NavigationTree.siblings.length - 1
+        visible: NavigationTree.isLeaf && NavigationTree.siblingIndex < NavigationTree.siblings.length - 1
         z: 10
 
         HmiIcon {
