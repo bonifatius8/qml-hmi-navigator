@@ -202,7 +202,9 @@ Repeater {
 
 ## ライブデモ
 
-Coming soon (Qt for WebAssembly)
+**[https://bonifatius8.github.io/qml-hmi-navigator/](https://bonifatius8.github.io/qml-hmi-navigator/)**
+
+Qt for WebAssembly ビルド。GitHub Actions で自動デプロイ。
 
 ## ライセンス
 
