@@ -17,7 +17,7 @@ jobs:
       - name: Install Qt (host tools)
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.8.3'
+          version: '6.7.3'
           target: 'desktop'
           arch: 'linux_gcc_64'
           cache: true
@@ -25,7 +25,7 @@ jobs:
       - name: Install Qt (WebAssembly)
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.8.3'
+          version: '6.7.3'
           target: 'wasm'
           arch: 'wasm_multithread'
           cache: true
@@ -38,7 +38,9 @@ jobs:
 
       - name: Configure
         run: |
-          ${QT_ROOT_DIR}/wasm_multithread/bin/qt-cmake \
+          echo "QT_ROOT_DIR=$QT_ROOT_DIR"
+          ls "$QT_ROOT_DIR/bin/" | grep cmake || true
+          "$QT_ROOT_DIR/bin/qt-cmake" \
             -S . -B build \
             -DCMAKE_BUILD_TYPE=Release
 
