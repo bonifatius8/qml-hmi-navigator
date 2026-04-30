@@ -17,23 +17,23 @@ jobs:
       - name: Install Qt (host tools)
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.7.3'
+          version: '6.6.3'
           target: 'desktop'
-          arch: 'linux_gcc_64'
+          arch: 'gcc_64'
           cache: true
 
       - name: Install Qt (WebAssembly)
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.7.3'
-          target: 'wasm'
+          version: '6.6.3'
+          target: 'desktop'
           arch: 'wasm_multithread'
           cache: true
 
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v14
         with:
-          version: '3.1.50'
+          version: '3.1.37'
           actions-cache-folder: emsdk-cache
 
       - name: Configure
