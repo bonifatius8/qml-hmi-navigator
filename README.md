@@ -18,22 +18,38 @@ Qt 6 / QML で構築した汎用 HMI ナビゲーションフレームワーク�
 
 ```mermaid
 graph TD
-    Main["Main.qml<br/>(entry point)"] --> Shell["NavigatorShell<br/>(Header + Loader)"]
-    Shell --> Header["NavHeader<br/>(breadcrumb / back / global buttons)"]
-    Shell --> Loader["Loader<br/>(current screen)"]
+    Main["Main.qml<br/>ノード登録 / 画面登録 / 初期遷移"]
 
-    NT["NavigationTree (Singleton)<br/>node graph · state · menuModel · breadcrumbs"]
-    SR["ScreenRegistry (Singleton)<br/>nodeName → QML path"]
-    TH["ThemeObject (Singleton)<br/>colors · fonts"]
+    subgraph sg1["Singleton 層（状態管理）"]
+        NT["NavigationTree<br/>ノード定義・現在状態<br/>menuModel / breadcrumbs"]
+        SR["ScreenRegistry<br/>nodeId → QML URL"]
+        TH["ThemeObject<br/>色・フォント定数"]
+    end
 
-    NT -->|navigate| SR
+    subgraph sg2["フレーム層"]
+        Shell["NavigatorShell"]
+        Header["NavHeader<br/>パンくず / 戻る / グローバルボタン"]
+        Loader["Loader（動的画面読込）"]
+    end
+
+    subgraph sg3["画面層"]
+        MS["MenuScreen"]
+        LA["LeafScreenA"]
+        SL["StatusLeafScreen"]
+    end
+
+    Main -->|registerNode / navigate| NT
+    Main -->|register| SR
+    Main --> Shell
+    Shell --> Header
+    Shell --> Loader
+    NT -->|遷移| SR
     SR -->|source URL| Loader
-    NT --> Header
-    TH --> Shell
-
-    Loader --> MenuScreen
-    Loader --> LeafScreenA
-    Loader --> StatusLeafScreen
+    NT -->|menuModel / breadcrumbs| Header
+    TH -->|テーマ| Shell
+    Loader -.->|動的| MS
+    Loader -.->|動的| LA
+    Loader -.->|動的| SL
 ```
 
 ### 設計思想
