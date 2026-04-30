@@ -8,7 +8,6 @@ Item {
     property bool active: false
     signal clicked(bool value)
 
-    width: 460
     height: ThemeObject.buttonHeight
 
     Row {

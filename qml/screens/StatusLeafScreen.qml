@@ -5,7 +5,7 @@ Item {
     id: root
     anchors.fill: parent
 
-    readonly property int itemH: 60 + 8
+    readonly property int itemH: ThemeObject.buttonHeight + ThemeObject.spacing
     readonly property int totalItems: Math.min(Math.floor(parent.height / itemH), dummyData.length)
 
     readonly property var dummyData: [
@@ -23,8 +23,8 @@ Item {
 
     Column {
         anchors.centerIn: parent
-        width: 720
-        spacing: 8
+        width: parent.width - 80
+        spacing: ThemeObject.spacing
 
         Repeater {
             model: root.totalItems

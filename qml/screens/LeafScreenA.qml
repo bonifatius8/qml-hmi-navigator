@@ -5,7 +5,7 @@ Item {
     id: root
     anchors.fill: parent
 
-    readonly property int itemH: ThemeObject.buttonHeight + 8
+    readonly property int itemH: ThemeObject.buttonHeight + ThemeObject.spacing
     readonly property int totalItems: Math.floor(parent.height / itemH)
 
     property var states: {
@@ -21,13 +21,15 @@ Item {
 
     Column {
         anchors.centerIn: parent
-        spacing: 8
+        width: parent.width - 80
+        spacing: ThemeObject.spacing
 
         Repeater {
             model: root.totalItems
 
             OnOffButton {
                 property int idx: index + 1
+                width: parent.width
                 label: NavigationTree.breadcrumbs[NavigationTree.breadcrumbs.length - 1].label
                       + " " + String(idx).padStart(2, "0")
                 active: root.states["item" + idx] ?? false
