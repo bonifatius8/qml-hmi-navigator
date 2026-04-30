@@ -37,6 +37,8 @@ qt_add_qml_module(qml-hmi-navigator
 
 target_link_libraries(qml-hmi-navigator PRIVATE Qt6::Quick)
 
-set_target_properties(qml-hmi-navigator PROPERTIES
-    WIN32_EXECUTABLE TRUE
-)
+if(NOT EMSCRIPTEN)
+    set_target_properties(qml-hmi-navigator PROPERTIES
+        WIN32_EXECUTABLE TRUE
+    )
+endif()

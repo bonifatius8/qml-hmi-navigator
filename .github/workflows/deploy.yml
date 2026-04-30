@@ -1,0 +1,62 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt (host tools)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          cache: true
+
+      - name: Install Qt (WebAssembly)
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          target: 'wasm'
+          arch: 'wasm_multithread'
+          cache: true
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: '3.1.50'
+          actions-cache-folder: emsdk-cache
+
+      - name: Configure
+        run: |
+          ${QT_ROOT_DIR}/wasm_multithread/bin/qt-cmake \
+            -S . -B build \
+            -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --parallel $(nproc)
+
+      - name: Prepare deploy
+        run: |
+          mkdir -p dist
+          find build -maxdepth 1 -type f \( -name "*.html" -o -name "*.js" -o -name "*.wasm" -o -name "*.svg" \) \
+            -exec cp {} dist/ \;
+          mv dist/qml-hmi-navigator.html dist/index.html
+          curl -fsSL https://cdn.jsdelivr.net/npm/coi-serviceworker@0.1.7/coi-serviceworker.min.js \
+            -o dist/coi-serviceworker.js
+          sed -i 's|</head>|<script src="coi-serviceworker.js"></script></head>|' dist/index.html
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

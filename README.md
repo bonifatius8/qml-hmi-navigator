@@ -1,20 +1,20 @@
 # qml-hmi-navigator
 
-A general-purpose HMI navigation framework built with Qt 6 / QML.
+Qt 6 / QML で構築した汎用 HMI ナビゲーションフレームワーク。
 
-This project re-implements industrial embedded UI design patterns from scratch — graph-structured navigation, Singleton state management, and lazy screen loading via `Loader`. It is intended as an open-source portfolio demonstrating real-world embedded HMI architecture.
+産業用組込み UI のデザインパターン（グラフ構造ナビゲーション・Singleton 状態管理・`Loader` による遅延画面読み込み）をフルスクラッチで再実装したプロジェクトです。実際の組込み HMI アーキテクチャを示すオープンソースのポートフォリオとして公開しています。
 
-## Features
+## 機能
 
-- **Data-driven navigation** — Screen transitions are defined as graph data (nodes and edges), not hard-coded into UI components
-- **Dynamic menu generation** — Child menus are built automatically from the navigation tree at runtime
-- **Breadcrumb tracking** — Full path from root to current node, always in sync with navigation state
-- **Lazy screen loading** — Screens are loaded on demand via `Loader`, keeping memory usage minimal
-- **Canvas 2D icons** — All icons drawn with Canvas 2D API; no PNG or SVG assets required
-- **Embedded font** — MigMix 2P bundled; no system font dependency
-- **800x480 target** — Designed for small industrial displays; easily adaptable
+- **データ駆動ナビゲーション** — 画面遷移は UI コンポーネントにハードコードせず、グラフデータ（ノードとエッジ）として定義する
+- **動的メニュー生成** — ナビゲーションツリーから実行時に子メニューを自動構築する
+- **パンくずリスト追跡** — ルートから現在ノードまでのフルパスをナビゲーション状態と常に同期する
+- **遅延画面読み込み** — `Loader` を使ってオンデマンドで画面を読み込み、メモリ使用量を最小限に抑える
+- **Canvas 2D アイコン** — すべてのアイコンを Canvas 2D API で描画。PNG・SVG アセット不要
+- **フォント内蔵** — MigMix 2P を同梱。システムフォントへの依存なし
+- **800x480 ターゲット** — 小型産業用ディスプレイ向け設計。容易にカスタマイズ可能
 
-## Architecture
+## アーキテクチャ
 
 ```mermaid
 graph TD
@@ -36,30 +36,30 @@ graph TD
     Loader --> StatusLeafScreen
 ```
 
-### Design Philosophy
+### 設計思想
 
-Navigation destinations are separated from UI components and declared as a **graph of named nodes**. The `NavigationTree` Singleton is the single source of truth for:
+ナビゲーション先は UI コンポーネントから切り離し、**名前付きノードのグラフ**として宣言します。`NavigationTree` Singleton が以下の唯一の情報源（Single Source of Truth）となります。
 
-- Which node is currently active
-- Which nodes are children of the current node (used to build menus)
-- The breadcrumb path from root to current node
+- 現在アクティブなノード
+- 現在ノードの子ノード一覧（メニュー構築に使用）
+- ルートから現在ノードまでのパンくずパス
 
-Screens never directly navigate to other screens. They only call `NavigationTree.navigate(nodeId)`.
+画面コンポーネントは他の画面へ直接遷移しません。`NavigationTree.navigate(nodeId)` を呼び出すだけです。
 
-### Component Overview
+### コンポーネント一覧
 
-| Component | Role |
+| コンポーネント | 役割 |
 |---|---|
-| `NavigationTree` | Navigation state machine (Singleton) |
-| `ScreenRegistry` | Screen path registry: nodeName → QML URL (Singleton) |
-| `ThemeObject` | Theme values: colors and fonts (Singleton) |
-| `NavigatorShell` | Root frame: NavHeader + Loader |
-| `NavHeader` | Breadcrumb bar, back button, global action buttons |
-| `HmiIcon` | Canvas 2D icons (`back`, `status`, `test`, `setting`, `arrow`) |
-| `NavButton` | Navigation list button |
-| `OnOffButton` | On/Off toggle button |
+| `NavigationTree` | ナビゲーション状態マシン（Singleton） |
+| `ScreenRegistry` | 画面パスレジストリ: nodeName → QML URL（Singleton） |
+| `ThemeObject` | テーマ値: 色とフォント（Singleton） |
+| `NavigatorShell` | ルートフレーム: NavHeader + Loader |
+| `NavHeader` | パンくずバー・戻るボタン・グローバルアクションボタン |
+| `HmiIcon` | Canvas 2D アイコン（`back`・`status`・`test`・`setting`・`arrow`） |
+| `NavButton` | ナビゲーションリストボタン |
+| `OnOffButton` | On/Off トグルボタン |
 
-## Directory Structure
+## ディレクトリ構成
 
 ```
 qml-hmi-navigator/
@@ -87,13 +87,13 @@ qml-hmi-navigator/
         └── StatusLeafScreen.qml
 ```
 
-## Requirements
+## 動作要件
 
-- Qt 6.5 or later
-- CMake 3.16 or later
-- A C++17-capable compiler
+- Qt 6.5 以降
+- CMake 3.16 以降
+- C++17 対応コンパイラ
 
-## Build
+## ビルド
 
 ```bash
 cmake -S . -B build
@@ -101,18 +101,18 @@ cmake --build build
 ./build/qml-hmi-navigator
 ```
 
-On Windows with the Qt MinGW toolchain, set `CMAKE_PREFIX_PATH` first:
+Windows で Qt MinGW ツールチェーンを使用する場合は、先に `CMAKE_PREFIX_PATH` を設定してください。
 
 ```bash
 cmake -S . -B build -DCMAKE_PREFIX_PATH="C:/Qt/6.5.x/mingw_64"
 cmake --build build
 ```
 
-## Usage
+## 使い方
 
-### Declaring the Navigation Graph
+### ナビゲーショングラフの宣言
 
-Register nodes in `Main.qml` (or any initialization entry point) before the application window is shown:
+アプリケーションウィンドウ表示前に `Main.qml`（または任意の初期化エントリポイント）でノードを登録します。
 
 ```qml
 Component.onCompleted: {
@@ -134,7 +134,7 @@ Component.onCompleted: {
 }
 ```
 
-### Navigating from a Screen
+### 画面からの遷移
 
 ```qml
 // Go to a specific node
@@ -148,9 +148,9 @@ NavigationTree.navigateSibling(-1)   // previous
 NavigationTree.navigateSibling(+1)   // next
 ```
 
-### Binding the Menu List
+### メニューリストのバインディング
 
-`NavigationTree.menuModel` is a list model that reflects the children of the current node. Bind it directly to a `Repeater` or `ListView`:
+`NavigationTree.menuModel` は現在ノードの子を反映するリストモデルです。`Repeater` や `ListView` に直接バインドできます。
 
 ```qml
 Repeater {
@@ -162,32 +162,32 @@ Repeater {
 }
 ```
 
-## API Reference
+## API リファレンス
 
-### NavigationTree (Singleton)
+### NavigationTree（Singleton）
 
-| Method / Property | Type | Description |
+| メソッド / プロパティ | 型 | 説明 |
 |---|---|---|
-| `registerNode(id, parentId, label)` | function | Register a single navigation node |
-| `registerRepeat(id, parentId, label, range)` | function | Register a numbered series of nodes; `range` is `{ from: N, to: M }` |
-| `navigate(nodeId)` | function | Navigate to the specified node |
-| `navigateSibling(delta)` | function | Move to adjacent sibling (`+1` forward, `-1` backward) |
-| `back()` | function | Navigate to the parent node |
-| `menuModel` | list property | Children of the current node (`{ label, name }` per item) |
-| `breadcrumbs` | list property | Ordered list from root to current node (`{ label, name }` per item) |
-| `currentNodeId` | string property | ID of the currently active node |
+| `registerNode(id, parentId, label)` | function | 単一のナビゲーションノードを登録する |
+| `registerRepeat(id, parentId, label, range)` | function | 連番ノードを一括登録する。`range` は `{ from: N, to: M }` |
+| `navigate(nodeId)` | function | 指定ノードへ遷移する |
+| `navigateSibling(delta)` | function | 隣接する兄弟ノードへ移動する（`+1` で次、`-1` で前） |
+| `back()` | function | 親ノードへ戻る |
+| `menuModel` | list property | 現在ノードの子一覧（各アイテムは `{ label, name }`） |
+| `breadcrumbs` | list property | ルートから現在ノードまでの順序付きリスト（各アイテムは `{ label, name }`） |
+| `currentNodeId` | string property | 現在アクティブなノードの ID |
 
-### ScreenRegistry (Singleton)
+### ScreenRegistry（Singleton）
 
-| Method | Description |
+| メソッド | 説明 |
 |---|---|
-| `register(nodeId, qmlUrl)` | Map a node ID to a QML file URL |
-| `resolve(nodeId)` | Return the QML URL for the given node ID |
+| `register(nodeId, qmlUrl)` | ノード ID と QML ファイル URL を対応付ける |
+| `resolve(nodeId)` | 指定ノード ID に対応する QML URL を返す |
 
-## Live Demo
+## ライブデモ
 
 Coming soon (Qt for WebAssembly)
 
-## License
+## ライセンス
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT License. 詳細は [LICENSE](LICENSE) を参照してください。
