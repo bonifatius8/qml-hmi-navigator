@@ -200,7 +200,7 @@ Repeater {
 | `register(nodeId, qmlUrl)` | ノード ID と QML ファイル URL を対応付ける |
 | `resolve(nodeId)` | 指定ノード ID に対応する QML URL を返す |
 
-## ライブデモ
+## ライブデモ（PCのみ）
 
 **[https://bonifatius8.github.io/qml-hmi-navigator/](https://bonifatius8.github.io/qml-hmi-navigator/)**
 
