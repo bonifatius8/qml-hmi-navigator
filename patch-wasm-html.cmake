@@ -1,38 +1,28 @@
 file(READ "${HTML_FILE}" content)
 
-# viewport: device-width で通常のモバイルレイアウト
-# Qt の canvas サイズは #screen.clientWidth (= 800px, CSS transform の影響を受けない) で決まる
+# viewport を 800px 固定に変更 → ブラウザが物理画面に合わせてスケール
+# Qt は window.innerWidth=800 を見て 800x480 canvas を作る（resize 処理を触らない）
+# 整数倍スケール: initial-scale を JS で動的設定
 string(REPLACE
 "<meta name=\"viewport\" content=\"width=device-width, height=device-height, user-scalable=0\"/>"
-"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=no\"/>"
+"<meta name=\"viewport\" id=\"vp\" content=\"width=800, initial-scale=1\"/>"
 content "${content}")
 
-# #screen を 800×480 絶対固定。transform-origin: 0 0 で左上基点スケール
-# clientWidth/clientHeight は transform 非依存 → ResizeObserver が Qt に渡す値は常に 800×480
+# センタリング CSS (viewport=800 なので 100vw=800px → #screen がちょうど収まる)
 string(REPLACE "</style>"
-"      html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #1a1a1a; position: relative; }
-      #screen { position: absolute; width: 800px; height: 480px; transform-origin: 0 0; }
+"      html, body { padding: 0; margin: 0; background: #1a1a1a; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      #screen { width: 800px; height: 480px; flex-shrink: 0; }
     </style>" content "${content}")
 
-# CSS transform でスケール適用。#screen のレイアウトサイズは変わらないため
-# Qt の ResizeObserver は 800×480 を検知し続け、キャンバスリサイズが発生しない
+# 整数スケール: screen サイズから initial-scale を計算して viewport に反映
+# window.screen はブラウザの物理ピクセルサイズ (CSS ピクセルではない)
 string(REPLACE "<script src=\"${APP_NAME}.js\">"
 "<script src=\"coi-serviceworker.js\"></script>
     <script>
       (function() {
-        function applyScale() {
-          var vw = window.innerWidth;
-          var vh = window.innerHeight;
-          var s  = Math.min(vw / 800, vh / 480);
-          var el = document.getElementById('screen');
-          if (!el) return;
-          el.style.left      = ((vw - 800 * s) / 2) + 'px';
-          el.style.top       = ((vh - 480 * s) / 2) + 'px';
-          el.style.transform = 'scale(' + s + ')';
-        }
-        window.addEventListener('resize', applyScale);
-        window.addEventListener('orientationchange', function() { setTimeout(applyScale, 150); });
-        applyScale();
+        var s = Math.max(1, Math.floor(Math.min(screen.width / 800, screen.height / 480)));
+        document.getElementById('vp').content =
+          'width=800, initial-scale=' + s + ', minimum-scale=' + s + ', maximum-scale=' + s;
       })();
     </script>
     <script src=\"${APP_NAME}.js\">"
