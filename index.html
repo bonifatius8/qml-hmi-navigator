@@ -7,15 +7,15 @@
     <!--Set visual viewport size for mobile devices to the device size,
         witch results in a scale of 1 and a 1:1 mapping between CSS pixels
         and Qt device independent pixels. -->
-    <meta name="viewport" id="vp" content="width=800, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 
     <title>qml-hmi-navigator</title>
     <style>
       /* Make the html body cover the entire (visual) viewport with no scroll bars. */
       html, body { padding: 0; margin: 0; overflow: hidden; height: 100% }
       #screen { width: 100%; height: 100%; }
-          html, body { padding: 0; margin: 0; background: #1a1a1a; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-      #screen { width: 800px; height: 480px; flex-shrink: 0; }
+          html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; overflow: hidden; background: #1a1a1a; position: relative; }
+      #screen { position: absolute; width: 800px; height: 480px; transform-origin: 0 0; }
     </style>
   </head>
   <body onload="init()">
@@ -73,9 +73,19 @@
     <script src="coi-serviceworker.js"></script>
     <script>
       (function() {
-        var s = Math.max(1, Math.floor(Math.min(screen.width / 800, screen.height / 480)));
-        document.getElementById('vp').content =
-          'width=800, initial-scale=' + s + ', minimum-scale=' + s + ', maximum-scale=' + s;
+        function applyScale() {
+          var vw = window.innerWidth;
+          var vh = window.innerHeight;
+          var s  = Math.min(vw / 800, vh / 480);
+          var el = document.getElementById('screen');
+          if (!el) return;
+          el.style.left      = ((vw - 800 * s) / 2) + 'px';
+          el.style.top       = ((vh - 480 * s) / 2) + 'px';
+          el.style.transform = 'scale(' + s + ')';
+        }
+        window.addEventListener('resize', applyScale);
+        window.addEventListener('orientationchange', function() { setTimeout(applyScale, 150); });
+        applyScale();
       })();
     </script>
     <script src="qml-hmi-navigator.js"></script>
